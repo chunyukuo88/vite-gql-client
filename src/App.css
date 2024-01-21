@@ -1,0 +1,24 @@
+#App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#gigs-container {
+
+}
+
+.gig-card {
+    margin: 1rem;
+    padding: 1rem;
+    width: 45rem;
+}
+
+.card-field {
+    font-weight: bold;
+}
+
+.payment-complete {
+    color: green;
+}
