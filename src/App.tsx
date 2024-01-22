@@ -6,7 +6,11 @@ function App() {
     const [gigs, setGigs] = useState();
 
     useEffect(() => {
-        getGigs().then(setGigs);
+        getGigs().then(fetchedGigs => {
+            const sortByCompletionDate = (a, b) => b.end_date.localeCompare(a.end_date);
+            const sorted = fetchedGigs.sort(sortByCompletionDate);
+            setGigs(sorted);
+        });
     }, []);
 
     const dollarStyle = {
