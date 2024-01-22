@@ -9,15 +9,6 @@ function App() {
         getGigs().then(setGigs);
     }, []);
 
-    const PaymentDisplay = (gig) => (
-        <h3>
-            {gig.date_paid
-                ? <span className='payment-complete'>Paid on {gig.date_paid.split('T')[0]}</span>
-                : <span style={{ color: 'salmon'}}>Payment pending.</span>
-            }
-        </h3>
-    );
-
     const dollarStyle = {
         color: 'green',
         fontWeight: 'bold',
@@ -29,13 +20,18 @@ function App() {
                 return (
                     <div className='gig-card card' key={gig.task_id}>
                         <div className='card-header'>Gig completed {gig.end_date.split(' ')[0]}</div>
-                        <PaymentDisplay gig={gig}/>
+                        <h3>
+                            {gig.date_paid
+                                ? <span className='payment-complete'>Paid on {gig.date_paid.split('T')[0]}</span>
+                                : <span style={{ color: 'salmon'}}>Payment pending.</span>
+                            }
+                        </h3>
                         <div>
                             <span className='card-field'>Earnings: </span>
                             <span style={dollarStyle} >${gig.total_amount_charged}</span>
                         </div>
                         <div>
-                            <span className='card-field'>Documents processed: </span>
+                            <span className='card-field'>Documents: </span>
                             {gig.file_names}
                         </div>
                         <div>

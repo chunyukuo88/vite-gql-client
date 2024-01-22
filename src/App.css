@@ -6,13 +6,18 @@
 }
 
 #gigs-container {
-
+    display: flex;
+    flex-direction: column;
+    background-color: #aef1ae;
+    margin: 1rem;
+    border-radius: 0.5rem;
 }
 
 .gig-card {
     margin: 1rem;
     padding: 1rem;
-    width: 45rem;
+    width: 22rem;
+    border-radius: 0.5rem;
 }
 
 .card-field {
@@ -21,4 +26,11 @@
 
 .payment-complete {
     color: green;
+}
+
+/* Extra small devices, like my rubbish iPhone 6*/
+@media only screen and (max-width: 576px) {
+    .gig-card {
+        width: 20rem;
+    }
 }
