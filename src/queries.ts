@@ -4,6 +4,10 @@ import { errorLogger, logger } from './common/utils.ts';
 const url = 'http://localhost:9001/graphql';
 const client = new GraphQLClient(url);
 
+export const queryKeys = {
+    GET_GIGS: 'Get gigs',
+};
+
 export async function getGigs(){
     const query = gql`
         query {

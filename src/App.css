@@ -6,20 +6,25 @@
 }
 
 #gigs-container {
-    background-color: #aef1ae;
-    border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
+
+    background-color: #aef1ae;
+    border-radius: 0.5rem;
     height: 46rem;
-    overflow: hidden;
     margin: 1rem;
+    overflow: hidden;
 }
 
 .gig-card {
-    margin: 1rem;
+    border-radius: 0.5rem;
+    margin: 0.5rem 1rem;
     padding: 1rem;
     width: 22rem;
-    border-radius: 0.5rem;
+}
+
+.gig-card:nth-child(1) {
+    margin-top: 1rem;
 }
 
 .card-field {
@@ -30,7 +35,11 @@
     color: green;
 }
 
-/* Extra small devices, like my rubbish iPhone 6*/
+.payment-pending {
+    color: salmon;
+}
+
+/* For extra small devices, like my ancient iPhone */
 @media only screen and (max-width: 576px) {
     .gig-card {
         width: 20rem;
