@@ -4,14 +4,18 @@ import './App.css';
 
 function App() {
     const [gigs, setGigs] = useState();
+    const [totalGigs, setTotalGigs] = useState();
 
     useEffect(() => {
         getGigs().then(fetchedGigs => {
             const sortByCompletionDate = (a, b) => b.end_date.localeCompare(a.end_date);
             const sorted = fetchedGigs.sort(sortByCompletionDate);
             setGigs(sorted);
+            setTotalGigs(sorted.length);
         });
     }, []);
+
+    console.log(totalGigs);
 
     const dollarStyle = {
         color: 'green',

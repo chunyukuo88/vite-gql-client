@@ -6,11 +6,13 @@
 }
 
 #gigs-container {
+    background-color: #aef1ae;
+    border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
-    background-color: #aef1ae;
+    height: 46rem;
+    overflow: hidden;
     margin: 1rem;
-    border-radius: 0.5rem;
 }
 
 .gig-card {
