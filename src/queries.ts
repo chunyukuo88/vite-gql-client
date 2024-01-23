@@ -1,4 +1,5 @@
 import { GraphQLClient, gql } from 'graphql-request';
+import { errorLogger, logger } from './common/utils.ts';
 
 const url = 'http://localhost:9001/graphql';
 const client = new GraphQLClient(url);
@@ -21,7 +22,11 @@ export async function getGigs(){
             }
         }
     `;
-    const { gigs } = await client.request(query);
-    console.log(gigs);
-    return gigs;
+    try {
+        const { gigs } = await client.request(query);
+        logger('Returned gigs', gigs);
+        return gigs;
+    } catch (e) {
+        errorLogger('Failed to grab gigs. Error: ', e);
+    }
 }
