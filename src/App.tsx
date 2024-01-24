@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import {getGigs, queryKeys} from './queries.ts';
+import { getGigs, queryKeys } from './queries.ts';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+    const [displayIndex, setDisplayIndex] = useState(0);
     const queryResult = useQuery({
         queryKey: [queryKeys.GET_GIGS],
         queryFn: getGigs,
@@ -28,12 +30,13 @@ function App() {
         const gigs = queryResult.data;
         const sortByDateAscending = (a, b) => b.end_date.localeCompare(a.end_date);
         const sortedGigs = gigs.sort(sortByDateAscending);
+        const displayedGigs = sortedGigs.slice(displayIndex, displayIndex + 4);
         return (
             <main id='App'>
                 <div className='is-size-2'>Gigs</div>
                 <div className='is-size-4'>Recently completed gigs</div>
                 <section id='gigs-container'>
-                    {sortedGigs.map((gig) => (
+                    {displayedGigs.map((gig) => (
                         <div className='gig-card card' key={gig.task_id}>
                             <div className='card-header'>Gig completed {gig.end_date.split(' ')[0]}</div>
                             <h3>
@@ -61,6 +64,16 @@ function App() {
                         </div>
                     ))}
                 </section>
+                <button onClick={() => {
+                    if (displayIndex > 0) {
+                        setDisplayIndex(displayIndex - 1);
+                    }
+                }}>PREVIOUS</button>
+                <button onClick={() => {
+                    if (displayIndex + 3 <= queryResult.data.length) {
+                        setDisplayIndex(displayIndex + 1);
+                    }
+                }}>NEXT</button>
             </main>
         );
     }
