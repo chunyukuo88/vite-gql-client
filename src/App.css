@@ -58,6 +58,15 @@
     margin-top: 1rem;
 }
 
+#latest-gig {
+    transform: rotate(45deg) translateX(6rem) translateY(-6em);
+    background-color: #416205;
+    color: white;
+    padding: 0.25rem;
+    text-align: center;
+    z-index: 2;
+}
+
 .card-field {
     font-weight: bold;
 }

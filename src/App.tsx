@@ -46,6 +46,40 @@ function App() {
         </div>
     );
 
+    const isMostRecentGig = (displayedGigs, gig) => (displayIndex === 0 && gig === displayedGigs[0]);
+    const GigsDisplay = ({ displayedGigs }) => (
+        <section id='gigs-container'>
+            {displayedGigs.map((gig) => (
+                <div className='gig-card card' key={gig.task_id}>
+                    {isMostRecentGig(displayedGigs, gig) && <div id='latest-gig'>Latest</div>}
+                    <div className='card-header'>Gig completed {gig.end_date.split(' ')[0]}</div>
+                    <h3>
+                        {gig.date_paid
+                            ? <span className='payment-complete'>Paid on {gig.date_paid.split('T')[0]}</span>
+                            : <span className='payment-pending'>Payment pending.</span>
+                        }
+                    </h3>
+                    <div>
+                        <span className='card-field'>Earnings: </span>
+                        <span>${gig.total_amount_charged}</span>
+                    </div>
+                    <div>
+                        <span className='card-field'>Documents: </span>
+                        {gig.file_names}
+                    </div>
+                    <div>
+                        <span className='card-field'>Company: </span>
+                        {gig.company.dba}
+                    </div>
+                    <div>
+                        <span className='card-field'>Contact: </span>
+                        {gig.company.contact_name}
+                    </div>
+                </div>
+            ))}
+        </section>
+    );
+
     if (queryResult.isSuccess) {
         const gigs = queryResult.data;
         const sortByDateAscending = (a, b) => b.end_date.localeCompare(a.end_date);
@@ -57,35 +91,7 @@ function App() {
                 <div className='is-size-4'>Recently completed gigs</div>
                 <div id='buttons-and-gigs-container'>
                     <ScrollButtons />
-                    <section id='gigs-container'>
-                        {displayedGigs.map((gig) => (
-                            <div className='gig-card card' key={gig.task_id}>
-                                <div className='card-header'>Gig completed {gig.end_date.split(' ')[0]}</div>
-                                <h3>
-                                    {gig.date_paid
-                                        ? <span className='payment-complete'>Paid on {gig.date_paid.split('T')[0]}</span>
-                                        : <span className='payment-pending'>Payment pending.</span>
-                                    }
-                                </h3>
-                                <div>
-                                    <span className='card-field'>Earnings: </span>
-                                    <span>${gig.total_amount_charged}</span>
-                                </div>
-                                <div>
-                                    <span className='card-field'>Documents: </span>
-                                    {gig.file_names}
-                                </div>
-                                <div>
-                                    <span className='card-field'>Company: </span>
-                                    {gig.company.dba}
-                                </div>
-                                <div>
-                                    <span className='card-field'>Contact: </span>
-                                    {gig.company.contact_name}
-                                </div>
-                            </div>
-                        ))}
-                    </section>
+                    <GigsDisplay displayedGigs={displayedGigs} />
                     <ScrollButtons />
                 </div>
             </main>
