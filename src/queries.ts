@@ -28,7 +28,6 @@ export async function getGigs(){
     `;
     try {
         const { gigs } = await client.request(query);
-        logger('Returned gigs', gigs);
         return gigs;
     } catch (e) {
         errorLogger('Failed to grab gigs. Error: ', e);
