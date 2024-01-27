@@ -1,6 +1,7 @@
 #App {
     display: flex;
     justify-content: center;
+    background-color: #bfffe8;
 
     --gig-panels-height: 42rem;
     --gig-panels-width: 24rem;
@@ -12,6 +13,8 @@
     height: var(--gig-panels-height);
     width: var(--gig-panels-width);
 }
+
+
 
 #view-recent-gigs {
     margin: var(--standard-margin);

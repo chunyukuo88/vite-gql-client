@@ -1,6 +1,6 @@
-import './App.css';
 import { RecentGigsPanel } from './components/RecentGigsPanel.tsx';
 import { CreateGigPanel } from './components/CreateGigPanel.tsx';
+import './App.css';
 
 function App() {
 

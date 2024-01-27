@@ -1,0 +1,10 @@
+#create-new-gig form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: var(--standard-margin);
+}
+
+#hours-and-earnings-container {
+    display: ;
+}
