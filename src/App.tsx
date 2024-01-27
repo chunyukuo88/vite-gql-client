@@ -40,7 +40,7 @@ function App() {
     };
 
     const ScrollButtons = () => (
-        <div className='scroll-buttons-container'>
+        <div id='scroll-buttons-container'>
             <button onClick={previousButtonHandler} className={displayIndex === 0 && 'disabled'}/>
             <button onClick={nextButtonHandler} />
         </div>
@@ -50,13 +50,13 @@ function App() {
     const GigsDisplay = ({ displayedGigs }) => (
         <section id='gigs-container'>
             {displayedGigs.map((gig) => (
-                <div className='gig-card card' key={gig.task_id}>
+                <div className='wk-gig-card card' key={gig.task_id}>
                     {isMostRecentGig(displayedGigs, gig) && <div id='latest-gig'>Latest</div>}
                     <div className='card-header'>Gig completed {gig.end_date.split(' ')[0]}</div>
                     <h3>
                         {gig.date_paid
-                            ? <span className='payment-complete'>Paid on {gig.date_paid.split('T')[0]}</span>
-                            : <span className='payment-pending'>Payment pending.</span>
+                            ? <span className='wk-payment-complete'>Paid on {gig.date_paid.split('T')[0]}</span>
+                            : <span className='wk-payment-pending'>Payment pending.</span>
                         }
                     </h3>
                     <div>
@@ -87,12 +87,17 @@ function App() {
         const displayedGigs = sortedGigs.slice(displayIndex, displayIndex + 4);
         return (
             <main id='App'>
-                <div className='is-size-2'>Gigs</div>
-                <div className='is-size-4'>Recently completed gigs</div>
-                <div id='buttons-and-gigs-container'>
-                    <ScrollButtons />
-                    <GigsDisplay displayedGigs={displayedGigs} />
-                    <ScrollButtons />
+                <div className='card'>
+                    <header className='card-header'>
+                        <div id='recently-completed' className='card-header-title is-size-2'>
+                            Recently Completed
+                        </div>
+                    </header>
+                        <div className='is-size-4'></div>
+                    <div id='buttons-and-gigs-container'>
+                        <ScrollButtons />
+                        <GigsDisplay displayedGigs={displayedGigs} />
+                    </div>
                 </div>
             </main>
         );
