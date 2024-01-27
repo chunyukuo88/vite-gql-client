@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getGigs, queryKeys } from './queries.ts';
 import { useState } from 'react';
+import { getDisplayedGigs } from './utils.ts';
 import './App.css';
 
 function App() {
@@ -47,8 +48,9 @@ function App() {
     );
 
     const isMostRecentGig = (displayedGigs, gig) => (displayIndex === 0 && gig === displayedGigs[0]);
-    const GigsDisplay = ({ displayedGigs }) => (
-        <section id='gigs-container'>
+
+    const RecentGigsPanel = ({ displayedGigs }) => (
+        <div id='recent-gigs-panel'>
             {displayedGigs.map((gig) => (
                 <div className='wk-gig-card card' key={gig.task_id}>
                     {isMostRecentGig(displayedGigs, gig) && <div id='latest-gig'>Latest</div>}
@@ -77,28 +79,27 @@ function App() {
                     </div>
                 </div>
             ))}
-        </section>
+        </div>
     );
 
     if (queryResult.isSuccess) {
-        const gigs = queryResult.data;
-        const sortByDateAscending = (a, b) => b.end_date.localeCompare(a.end_date);
-        const sortedGigs = gigs.sort(sortByDateAscending);
-        const displayedGigs = sortedGigs.slice(displayIndex, displayIndex + 4);
+        const displayedGigs = getDisplayedGigs(queryResult, displayIndex);
         return (
             <main id='App'>
-                <div className='card'>
-                    <header className='card-header'>
-                        <div id='recently-completed' className='card-header-title is-size-2'>
-                            Recently Completed
-                        </div>
+                <section id='create-new-gig' className='card'>
+                    <header id='recently-completed' className='card-header-title is-size-2'>
+                        Record New Gig
                     </header>
-                        <div className='is-size-4'></div>
+                </section>
+                <section id='view-recent-gigs' className='card'>
+                    <header id='recently-completed' className='card-header-title is-size-2'>
+                        Recently Completed
+                    </header>
                     <div id='buttons-and-gigs-container'>
                         <ScrollButtons />
-                        <GigsDisplay displayedGigs={displayedGigs} />
+                        <RecentGigsPanel displayedGigs={displayedGigs} />
                     </div>
-                </div>
+                </section>
             </main>
         );
     }

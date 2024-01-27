@@ -1,29 +1,42 @@
 #App {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+
+    --gig-panels-height: 42rem;
+    --gig-panels-width: 24rem;
+    --standard-margin: 1rem;
+}
+
+#create-new-gig {
+    margin: var(--standard-margin);
+    height: var(--gig-panels-height);
+    width: var(--gig-panels-width);
+}
+
+#view-recent-gigs {
+    margin: var(--standard-margin);
 }
 
 #recently-completed {
     display: flex;
     justify-content: center;
+    padding: 0;
 }
 
 #buttons-and-gigs-container {
     display: flex;
-    align-items: center;
-    padding: 1rem;
+    padding: 0 1rem 1rem 1rem;
+    height: 38rem;
 }
 
 #scroll-buttons-container button {
-    background-color: #aef1ae;
-    border: 0px;
-    cursor: pointer;
     display: block;
+    background-color: #aef1ae;
+    border: 0;
+    cursor: pointer;
     height: 5.5rem;
-    margin: 0.5rem 0;
-    width: 2.5rem;
+    margin: 1rem 0;
+    width: 2rem;
 }
 
 #scroll-buttons-container button:nth-child(1),
@@ -41,13 +54,14 @@
     opacity: 0.5;
 }
 
-#gigs-container {
+#recent-gigs-panel {
     display: flex;
     flex-direction: column;
 
     background-color: #aef1ae;
     border-radius: 0.5rem;
-    height: 46rem;
+    height: calc(0.80 * var(--gig-panels-height));
+    width: var(--gig-panels-width);
     margin: 1rem;
     overflow: hidden;
 }
@@ -60,7 +74,7 @@
 }
 
 .wk-gig-card:nth-child(1) {
-    margin-top: 1rem;
+    margin-top: var(--standard-margin);
 }
 
 #latest-gig {
