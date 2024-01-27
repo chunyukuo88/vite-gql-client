@@ -53,15 +53,33 @@ export function CreateGigPanel() {
                 <div className='columns'>
                     <div className='column'>
                         <label className='label is-small'>Billable hours</label>
-                        <input className='input is-small' type='number' name='billable-hours' onChange={billableHoursHandler} />
+                        <input
+                            className='input is-small'
+                            type='number'
+                            name='billable-hours'
+                            onChange={billableHoursHandler}
+                            value={hours}
+                        />
                     </div>
                     <div className='column'>
                         <label className='label is-small'>Hourly Rate</label>
-                        <input className='input is-small' type='number' name='hourly-rate' onChange={hourlyRateHandler} />
+                        <input
+                            className='input is-small'
+                            type='number'
+                            name='hourly-rate'
+                            onChange={hourlyRateHandler}
+                            value={hourlyRate}
+                        />
                     </div>
                     <div className='column'>
                         <label className='label is-small'>Total</label>
-                        <input className='input is-small' type='number' name='total' onChange={totalHandler} />
+                        <input
+                            className='input is-small'
+                            type='number'
+                            name='total'
+                            onChange={totalHandler}
+                            value={totalAmountCharged}
+                        />
                     </div>
                 </div>
                 <br/>
