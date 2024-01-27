@@ -8,7 +8,19 @@ export const queryKeys = {
     GET_GIGS: 'Get gigs',
 };
 
-export async function getGigs(){
+export async function createGig(input) {
+    const mutation = gql`
+        mutation($input: CreateGigInput!) {
+            gig: createGig(input: $input) {
+                task_id
+            }
+        }
+    `;
+    const { gig } = await client.request(mutation, { input });
+    return gig;
+}
+
+export async function getGigs() {
     const query = gql`
         query {
             gigs {
