@@ -12,7 +12,12 @@ export const companies = {
 };
 
 export const rates = {
-    hourly: 39.0,
-    perChar: 0.1,
-    mostCommonInterval: 0.5,
+    HOURLY: 39.0,
+    PER_CHAR: 0.1,
+    MOST_COMMON_INTERVAL: 0.5,
 };
+
+export const billingOptions = {
+    HOUR: 'hour',
+    WORD_COUNT: 'wordCount',
+}
