@@ -8,10 +8,13 @@ export function CreateGigPanel() {
     const { CHECK, PAYPAL, WIRE_TRANSFER} = PaymentMethods;
     const { HOURLY, MOST_COMMON_INTERVAL, PER_CHAR } = rates;
     const { HOUR, WORD_COUNT } = billingOptions;
+
+// TODO: Pull company data from database intead of the constants.ts file.
     const [company, setCompany] = useState(companies.ETS.companyName);
     const [fileNames, setFileNames] = useState('');
 
-    const [taskNumberThisYear, setTaskNumberThisYear] = useState(1);
+// TODO: Calculate this from S3.
+    const [invoiceNumber, setInvoiceNumber] = useState(1);
     const [hourlyRate, setHourlyRate] = useState(HOURLY);
     const [hours, setHours] = useState(MOST_COMMON_INTERVAL);
     const [perCharRate, setPerCharRate] = useState(PER_CHAR);
@@ -19,7 +22,6 @@ export function CreateGigPanel() {
     const [totalAmountCharged, setTotalAmountCharged] = useState(hours * hourlyRate);
     const [billingOption, setBillingOption] = useState(HOUR);
     const [paymentMethod, setPaymentMethod] = useState(CHECK);
-
     const today = (new Date()).toISOString().split('T')[0];
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
