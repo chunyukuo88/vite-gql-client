@@ -4,3 +4,7 @@
     align-items: stretch;
     margin: var(--standard-margin);
 }
+
+.wk-radio-buttons {
+    text-align: center;
+}

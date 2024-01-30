@@ -49,42 +49,46 @@ export function RecentGigsPanel() {
 
     const isMostRecentGig = (displayedGigs, gig) => (displayIndex === 0 && gig === displayedGigs[0]);
 
-    const RecentGigsPanel = ({ displayedGigs }) => (
-        <div id='recent-gigs-panel'>
-            {displayedGigs.map((gig) => (
-                <div className='wk-gig-card card' key={gig.task_id}>
-                    {isMostRecentGig(displayedGigs, gig) && <div id='latest-gig'>Latest</div>}
-                    <div className='card-header'>Gig completed {gig.end_date.split(' ')[0]}</div>
-                    <h3>
-                        {gig.date_paid
-                            ? <span className='wk-payment-complete'>Paid on {gig.date_paid.split('T')[0]}</span>
-                            : <span className='wk-payment-pending'>Payment pending.</span>
-                        }
-                    </h3>
-                    <div>
-                        <span className='card-field'>Earnings: </span>
-                        <span>${gig.total_amount_charged}</span>
+    const RecentGigsPanel = ({ displayedGigs }) => {
+        if (!displayedGigs) return null;
+        return (
+            <div id='recent-gigs-panel'>
+                {displayedGigs.map((gig, key) => (
+                    <div className='wk-gig-card card' key={key}>
+                        {isMostRecentGig(displayedGigs, gig) && <div id='latest-gig'>Latest</div>}
+                        <div className='card-header'>Gig completed {gig.end_date.split(' ')[0]}</div>
+                        <h3>
+                            {gig.date_paid
+                                ? <span className='wk-payment-complete'>Paid on {gig.date_paid.split('T')[0]}</span>
+                                : <span className='wk-payment-pending'>Payment pending.</span>
+                            }
+                        </h3>
+                        <div>
+                            <span className='card-field'>Earnings: </span>
+                            <span>${gig.total_amount_charged}</span>
+                        </div>
+                        <div>
+                            <span className='card-field'>Documents: </span>
+                            {gig.file_names}
+                        </div>
+                        <div>
+                            <span className='card-field'>Company: </span>
+                            {gig.company.dba}
+                        </div>
+                        <div>
+                            <span className='card-field'>Contact: </span>
+                            {gig.company.contact_name}
+                        </div>
                     </div>
-                    <div>
-                        <span className='card-field'>Documents: </span>
-                        {gig.file_names}
-                    </div>
-                    <div>
-                        <span className='card-field'>Company: </span>
-                        {gig.company.dba}
-                    </div>
-                    <div>
-                        <span className='card-field'>Contact: </span>
-                        {gig.company.contact_name}
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
+                ))}
+            </div>
+        );
+    }
 
     if (queryResult.isSuccess) {
         const displayedGigs = getDisplayedGigs(queryResult, displayIndex);
-        return (
+
+        return displayedGigs ? (
             <section id='view-recent-gigs' className='card'>
                 <header id='recently-completed' className='card-header-title is-size-2'>
                     Recently Completed
@@ -94,6 +98,6 @@ export function RecentGigsPanel() {
                     <RecentGigsPanel displayedGigs={displayedGigs} />
                 </div>
             </section>
-        );
+        ) : <div>No gigs available at this time.</div>;
     }
 }

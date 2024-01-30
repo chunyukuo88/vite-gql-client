@@ -1,9 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { billingOptions, companies, PaymentMethods, rates } from '../common/constants.ts';
-import { v4 as uuidv4 } from 'uuid';
+import { createGig } from '../queries.ts';
 import './CreateGigPanel.css';
-import {createGig} from "../queries.ts";
+import {generateUniqueInteger} from "../common/utils.ts";
 
 export function CreateGigPanel() {
     const { CHECK, PAYPAL, WIRE_TRANSFER} = PaymentMethods;
@@ -15,12 +14,11 @@ export function CreateGigPanel() {
     const [fileNames, setFileNames] = useState('');
 
 // TODO: Calculate this from S3.
-    const [invoiceNumber, setInvoiceNumber] = useState(1);
     const [hourlyRate, setHourlyRate] = useState(HOURLY);
     const [hours, setHours] = useState(MOST_COMMON_INTERVAL);
     const [perCharRate, setPerCharRate] = useState(PER_CHAR);
     const [charCount, setCharCount] = useState(0);
-    const [totalAmountCharged, setTotalAmountCharged] = useState(hours * hourlyRate);
+    const [totalAmountCharged, setTotalAmountCharged] = useState(0);
     const [billingOption, setBillingOption] = useState(HOUR);
     const [paymentMethod, setPaymentMethod] = useState(CHECK);
     const today = (new Date()).toISOString().split('T')[0];
@@ -37,12 +35,10 @@ export function CreateGigPanel() {
         const date = new Date();
         const created_at = date.toISOString().split('T')[0];
         const input = {
-            task_id: uuidv4(),
+            invoice_number: generateUniqueInteger(),
             created_at,
             company,
-            // company_id: 1,
             file_names: fileNames,
-            task_number_this_year: invoiceNumber,
             payment_method: paymentMethod,
             hours,
             word_count: charCount,
@@ -62,7 +58,7 @@ export function CreateGigPanel() {
     const filesHandler = (e) => setFileNames(e.target.value);
     const billableHoursHandler = (e) => setHours(e.target.value);
     const hourlyRateHandler = (e) => setHourlyRate(e.target.value);
-    const totalHandler = (e) => setTotalAmountCharged(e.target.value);
+    const totalHandler = (e) => setTotalAmountCharged(parseFloat(e.target.value));
     const totalCharsHandler = (e) => setCharCount(e.target.value);
     const perCharRateHandler = (e) => setPerCharRate(e.target.value);
     const paymentMethodHandler = (e) => setPaymentMethod(e.target.value);
@@ -97,7 +93,26 @@ export function CreateGigPanel() {
               </div>
           </div>
           <div className='columns'>
-
+              <div className='column'>
+                  <label className='label is-small'>Invoice Sent</label>
+                  <input
+                      className='input is-small'
+                      type='date'
+                      name='invoice-sent-date'
+                      onChange={invoiceSentHandler}
+                      value={invoiceSent}
+                  />
+              </div>
+              <div className='column'>
+                  <label className='label is-small'>Date Paid</label>
+                  <input
+                      className='input is-small'
+                      type='date'
+                      name='date-paid'
+                      onChange={datePaidHandler}
+                      value={datePaid}
+                  />
+              </div>
           </div>
       </div>
     );
@@ -130,8 +145,8 @@ export function CreateGigPanel() {
                     className='input is-small'
                     type='number'
                     name='total'
-                    onChange={totalHandler}
                     value={totalAmountCharged}
+                    onChange={totalHandler}
                 />
             </div>
         </div>
@@ -184,40 +199,38 @@ export function CreateGigPanel() {
                         <option>Chen Xi</option>
                     </select>
                 </div>
-                <br/>
 
-                <label className='label is-small'>Files, comma-delimited</label>
+                <label className='label is-small'>File names, including extensions, comma-delimited</label>
                 <input className='input is-small' type='text' name='files' onChange={filesHandler} />
-                <br/>
 
-                <label className='label is-small'>Bill by</label>
-                <div className='control'>
-                    <label className='radio'>
-                        <input 
-                            type='radio' 
-                            name='billingOption'
-                            value={HOUR}
-                            checked={billingOption === HOUR}
-                            onChange={billingOptionHandler}
-                        />
-                        Hour
-                    </label>
-                    <label className='radio'>
-                        <input
-                            type='radio'
-                            name='billingOption'
-                            value={WORD_COUNT}
-                            checked={billingOption === WORD_COUNT}
-                            onChange={billingOptionHandler}
-                        />
-                        Word Count
-                    </label>
+                <div className='wk-radio-buttons'>
+                    <label className='label is-small'>Bill by</label>
+                    <div className='control'>
+                        <label className='radio'>
+                            <input
+                                type='radio'
+                                name='billingOption'
+                                value={HOUR}
+                                checked={billingOption === HOUR}
+                                onChange={billingOptionHandler}
+                            />
+                            Hour
+                        </label>
+                        <label className='radio'>
+                            <input
+                                type='radio'
+                                name='billingOption'
+                                value={WORD_COUNT}
+                                checked={billingOption === WORD_COUNT}
+                                onChange={billingOptionHandler}
+                            />
+                            Word Count
+                        </label>
+                    </div>
                 </div>
-                <br/>
 
                 {billingOption === HOUR ? <HourlyBillingInputs /> : null}
                 {billingOption === WORD_COUNT ? <PerWordBillingInputs/> : null}
-                <br/>
 
                 <label className='label is-small'>Payment method</label>
                 <div className='select is-primary'>
@@ -227,7 +240,6 @@ export function CreateGigPanel() {
                         <option>{PAYPAL}</option>
                     </select>
                 </div>
-                <br/>
 
                 <DateInputs />
                 <br/>
