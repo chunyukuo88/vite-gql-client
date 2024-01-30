@@ -1,15 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import {billingOptions, companies, PaymentMethods, rates} from '../common/constants.ts';
+import { billingOptions, companies, PaymentMethods, rates } from '../common/constants.ts';
 import { v4 as uuidv4 } from 'uuid';
 import './CreateGigPanel.css';
+import {createGig} from "../queries.ts";
 
 export function CreateGigPanel() {
     const { CHECK, PAYPAL, WIRE_TRANSFER} = PaymentMethods;
     const { HOURLY, MOST_COMMON_INTERVAL, PER_CHAR } = rates;
     const { HOUR, WORD_COUNT } = billingOptions;
 
-// TODO: Pull company data from database intead of the constants.ts file.
+// TODO: Pull company data from database instead of the constants.ts file, then add a loading spinner using Bulma styling next to the companies input.
     const [company, setCompany] = useState(companies.ETS.companyName);
     const [fileNames, setFileNames] = useState('');
 
@@ -23,17 +24,38 @@ export function CreateGigPanel() {
     const [billingOption, setBillingOption] = useState(HOUR);
     const [paymentMethod, setPaymentMethod] = useState(CHECK);
     const today = (new Date()).toISOString().split('T')[0];
+
+// TODO: These need to be converted to strings, from the Date type that gets set in each of these 4 setters.
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
     const [invoiceSent, setInvoiceSent] = useState(today);
     const [datePaid, setDatePaid] = useState('');
 
-    const handleSubmit = (e) => {
+// TODO: Create validation utility function.
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const input = {};
-        input.taskId = uuidv4();
         const date = new Date();
-        input.createdAt = date.toISOString().split('T')[0];
+        const created_at = date.toISOString().split('T')[0];
+        const input = {
+            task_id: uuidv4(),
+            created_at,
+            company,
+            // company_id: 1,
+            file_names: fileNames,
+            task_number_this_year: invoiceNumber,
+            payment_method: paymentMethod,
+            hours,
+            word_count: charCount,
+            hourly_rate: hourlyRate,
+            per_char_rate: perCharRate,
+            total_amount_charged: totalAmountCharged,
+            end_date: endDate,
+            start_date: startDate,
+            invoice_sent: invoiceSent,
+            date_paid: datePaid,
+        };
+        const gig = await createGig(input);
+        console.log('Gig created: ', gig);
     };
 
     const companyHandler = (e) => setCompany(e.target.value);
@@ -45,6 +67,40 @@ export function CreateGigPanel() {
     const perCharRateHandler = (e) => setPerCharRate(e.target.value);
     const paymentMethodHandler = (e) => setPaymentMethod(e.target.value);
     const billingOptionHandler = (e) => setBillingOption(e.target.value);
+    const startDateHandler = (e) => setStartDate(e.target.value);
+    const endDateHandler = (e) => setEndDate(e.target.value);
+    const invoiceSentHandler = (e) => setInvoiceSent(e.target.value);
+    const datePaidHandler = (e) => setDatePaid(e.target.value);
+
+    const DateInputs = () => (
+      <div className='rows'>
+          <div className='columns'>
+              <div className='column'>
+                  <label className='label is-small'>Start Date</label>
+                  <input
+                      className='input is-small'
+                      type='date'
+                      name='start-date'
+                      onChange={startDateHandler}
+                      value={startDate}
+                  />
+              </div>
+              <div className='column'>
+                  <label className='label is-small'>End Date</label>
+                  <input
+                      className='input is-small'
+                      type='date'
+                      name='end-date'
+                      onChange={endDateHandler}
+                      value={endDate}
+                  />
+              </div>
+          </div>
+          <div className='columns'>
+
+          </div>
+      </div>
+    );
 
     const HourlyBillingInputs = () => (
         <div className='columns'>
@@ -171,6 +227,9 @@ export function CreateGigPanel() {
                         <option>{PAYPAL}</option>
                     </select>
                 </div>
+                <br/>
+
+                <DateInputs />
                 <br/>
 
                 <button type='submit'>Submit</button>
