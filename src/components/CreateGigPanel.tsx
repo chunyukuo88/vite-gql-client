@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { billingOptions, companies, PaymentMethods, rates } from '../common/constants.ts';
 import { createGig } from '../queries.ts';
 import './CreateGigPanel.css';
-import { generateUniqueInteger} from "../common/utils.ts";
+import { generateUniqueInteger, logger } from '../common/utils.ts';
 
 const ConfirmationModal = ({ showModal, onClose, handleSubmit }) => (
     showModal && (
@@ -19,11 +19,9 @@ export function CreateGigPanel() {
     const { HOURLY, MOST_COMMON_INTERVAL, PER_CHAR } = rates;
     const { HOUR, WORD_COUNT } = billingOptions;
 
-// TODO: Pull company data from database instead of the constants.ts file, then add a loading spinner using Bulma styling next to the companies input.
     const [company, setCompany] = useState(companies.ETS.companyName);
     const [fileNames, setFileNames] = useState('');
 
-// TODO: Calculate this from S3.
     const [hourlyRate, setHourlyRate] = useState(HOURLY);
     const [hours, setHours] = useState(MOST_COMMON_INTERVAL);
     const [perCharRate, setPerCharRate] = useState(PER_CHAR);
@@ -33,13 +31,11 @@ export function CreateGigPanel() {
     const [paymentMethod, setPaymentMethod] = useState(CHECK);
     const today = (new Date()).toISOString().split('T')[0];
 
-// TODO: These need to be converted to strings, from the Date type that gets set in each of these 4 setters.
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
     const [invoiceSent, setInvoiceSent] = useState(today);
     const [datePaid, setDatePaid] = useState('');
 
-// TODO: Create validation utility function.
     const handleSubmit = async (e) => {
         e.preventDefault();
         const date = new Date();
@@ -61,7 +57,8 @@ export function CreateGigPanel() {
             date_paid: datePaid,
         };
         const gig = await createGig(input);
-        console.log('Gig created: ', gig);
+        logger('Gig created: ');
+        logger(gig);
         closeModal();
     };
 
