@@ -38,19 +38,18 @@ export function CreateGigPanel() {
     const [invoiceSent, setInvoiceSent] = useState(today);
     const [datePaid, setDatePaid] = useState(null);
 
-    const formIsIncomplete = (
-        !datePaid
-        || !totalAmountCharged
-        || !fileNames
-      );
+    const formIsIncomplete = !totalAmountCharged || !fileNames;
+
+    const getCreatedAtDate = () => {
+        const date = new Date();
+        return date.toISOString().split('T')[0];
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const date = new Date();
-        const created_at = date.toISOString().split('T')[0];
         const input = {
             invoice_number: generateUniqueInteger(),
-            created_at,
+            created_at: getCreatedAtDate(),
             company,
             file_names: fileNames,
             payment_method: paymentMethod,
@@ -270,8 +269,8 @@ export function CreateGigPanel() {
                 <br/>
 
                 {formIsIncomplete
-                    ? <button className='button' type='submit' disabled>Submit</button>
-                    : <button className='button' type='submit'>Submit</button>
+                    ? <button className='button ' type='submit' disabled>Submit invoice</button>
+                    : <button className='button' type='submit'>Submit invoice for ${totalAmountCharged}</button>
                 }
             </form>
             <ConfirmationModal

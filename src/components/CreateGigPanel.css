@@ -6,6 +6,10 @@
         flex-direction: column;
         align-items: stretch;
         margin: var(--standard-margin);
+        & button:not([disabled]) {
+            background-color: var(--dark-green);
+            color: white;
+        }
     }
 }
 
