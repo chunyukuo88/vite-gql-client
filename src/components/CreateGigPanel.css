@@ -1,0 +1,60 @@
+
+#create-new-gig {
+    color: var(--dark-green);
+
+    & form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin: var(--standard-margin);
+
+        & button:not([disabled]) {
+            background-color: var(--dark-green);
+            color: white;
+        }
+    }
+}
+
+#recently-completed {
+    color: var(--dark-green);
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.wk-radio-buttons-section {
+    background: var(--softer-green);
+    margin: 1rem 0;
+    text-align: center;
+
+    & label {
+        margin: 0 2rem;
+        & input {
+            margin: 0 0.5rem;
+        }
+    }
+}
+
+.wk-confirmation-modal-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.wk-confirmation-modal {
+    background-color: white;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    & button{
+        cursor: pointer;
+    }
+}
