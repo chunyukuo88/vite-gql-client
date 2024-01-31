@@ -2,7 +2,17 @@ import { useState } from 'react';
 import { billingOptions, companies, PaymentMethods, rates } from '../common/constants.ts';
 import { createGig } from '../queries.ts';
 import './CreateGigPanel.css';
-import {generateUniqueInteger} from "../common/utils.ts";
+import { generateUniqueInteger} from "../common/utils.ts";
+
+const ConfirmationModal = ({ showModal, onClose, handleSubmit }) => (
+    showModal && (
+        <div>
+            <p>Confirm submission?</p>
+            <button onClick={onClose}>Nah</button>
+            <button onClick={handleSubmit}>Yeah!</button>
+        </div>
+    )
+);
 
 export function CreateGigPanel() {
     const { CHECK, PAYPAL, WIRE_TRANSFER} = PaymentMethods;
@@ -52,6 +62,7 @@ export function CreateGigPanel() {
         };
         const gig = await createGig(input);
         console.log('Gig created: ', gig);
+        closeModal();
     };
 
     const companyHandler = (e) => setCompany(e.target.value);
@@ -187,12 +198,21 @@ export function CreateGigPanel() {
         </div>
     );
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const closeModal = () => setIsModalOpen(false);
+
+    const openModal = (e) => {
+        e.preventDefault();
+        setIsModalOpen(true);
+    }
+
     return (
         <section id='create-new-gig' className='card'>
             <header id='recently-completed' className='card-header-title is-size-2'>
                 Record a New One
             </header>
-            <form onSubmit={handleSubmit} className='control'>
+            <form onSubmit={openModal} className='control'>
                 <div className='select is-primary'>
                     <select className='input is-small' onChange={companyHandler}>
                         <option>ETS</option>
@@ -246,6 +266,11 @@ export function CreateGigPanel() {
 
                 <button type='submit'>Submit</button>
             </form>
+            <ConfirmationModal
+                showModal={isModalOpen}
+                onClose={closeModal}
+                handleSubmit={handleSubmit}
+            />
         </section>
     );
 }
