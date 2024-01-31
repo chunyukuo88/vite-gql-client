@@ -31,12 +31,18 @@ export function CreateGigPanel() {
     const [totalAmountCharged, setTotalAmountCharged] = useState(0);
     const [billingOption, setBillingOption] = useState(HOUR);
     const [paymentMethod, setPaymentMethod] = useState(CHECK);
-    const today = (new Date()).toISOString().split('T')[0];
 
+    const today = (new Date()).toISOString().split('T')[0];
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
     const [invoiceSent, setInvoiceSent] = useState(today);
-    const [datePaid, setDatePaid] = useState('');
+    const [datePaid, setDatePaid] = useState(null);
+
+    const formIsIncomplete = (
+        !datePaid
+        || !totalAmountCharged
+        || !fileNames
+      );
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -263,7 +269,10 @@ export function CreateGigPanel() {
                 <DateInputs />
                 <br/>
 
-                <button className='button' type='submit'>Submit</button>
+                {formIsIncomplete
+                    ? <button className='button' type='submit' disabled>Submit</button>
+                    : <button className='button' type='submit'>Submit</button>
+                }
             </form>
             <ConfirmationModal
                 showModal={isModalOpen}
