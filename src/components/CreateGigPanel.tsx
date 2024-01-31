@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { billingOptions, companies, PaymentMethods, rates } from '../common/constants.ts';
 import { createGig } from '../queries.ts';
-import './CreateGigPanel.css';
 import { generateUniqueInteger, logger } from '../common/utils.ts';
+import './CreateGigPanel.css';
 
 const ConfirmationModal = ({ showModal, onClose, handleSubmit }) => (
     showModal && (
-        <div>
-            <p>Confirm submission?</p>
-            <button onClick={onClose}>Nah</button>
-            <button onClick={handleSubmit}>Yeah!</button>
+        <div className='wk-confirmation-modal-overlay'>
+            <div className='wk-confirmation-modal'>
+                <p>Confirm submission?</p>
+                <button className='button' onClick={handleSubmit}>Yeah!</button>
+                <button className='button' onClick={onClose}>Nah</button>
+            </div>
         </div>
     )
 );
@@ -220,8 +222,8 @@ export function CreateGigPanel() {
                 <label className='label is-small'>File names, including extensions, comma-delimited</label>
                 <input className='input is-small' type='text' name='files' onChange={filesHandler} />
 
-                <div className='wk-radio-buttons'>
-                    <label className='label is-small'>Bill by</label>
+                <div className='wk-radio-buttons-section'>
+                    <label className='label is-small'>Bill them</label>
                     <div className='control'>
                         <label className='radio'>
                             <input
@@ -231,7 +233,7 @@ export function CreateGigPanel() {
                                 checked={billingOption === HOUR}
                                 onChange={billingOptionHandler}
                             />
-                            Hour
+                            Per Hour
                         </label>
                         <label className='radio'>
                             <input
@@ -241,7 +243,7 @@ export function CreateGigPanel() {
                                 checked={billingOption === WORD_COUNT}
                                 onChange={billingOptionHandler}
                             />
-                            Word Count
+                            Per Char
                         </label>
                     </div>
                 </div>
@@ -261,7 +263,7 @@ export function CreateGigPanel() {
                 <DateInputs />
                 <br/>
 
-                <button type='submit'>Submit</button>
+                <button className='button' type='submit'>Submit</button>
             </form>
             <ConfirmationModal
                 showModal={isModalOpen}
