@@ -13,6 +13,7 @@
     "test": "vitest --config vitest.config.js"
   },
   "dependencies": {
+    "@apollo/client": "^3.9.1",
     "@tanstack/react-query": "^5.17.19",
     "bulma": "^0.9.4",
     "graphql-request": "^6.1.0",
