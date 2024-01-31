@@ -1,11 +1,13 @@
 
 #create-new-gig {
     color: var(--dark-green);
+
     & form {
         display: flex;
         flex-direction: column;
         align-items: stretch;
         margin: var(--standard-margin);
+
         & button:not([disabled]) {
             background-color: var(--dark-green);
             color: white;
@@ -21,7 +23,7 @@
 }
 
 .wk-radio-buttons-section {
-    background: #aef1ae;
+    background: var(--softer-green);
     margin: 1rem 0;
     text-align: center;
 

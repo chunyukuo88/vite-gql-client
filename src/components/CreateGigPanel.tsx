@@ -269,8 +269,8 @@ export function CreateGigPanel() {
                 <br/>
 
                 {formIsIncomplete
-                    ? <button className='button ' type='submit' disabled>Submit invoice</button>
-                    : <button className='button' type='submit'>Submit invoice for ${totalAmountCharged}</button>
+                    ? <button className='button ' type='submit' disabled>Some fields are missing</button>
+                    : <button className='button' type='submit'>Record invoice for ${totalAmountCharged}</button>
                 }
             </form>
             <ConfirmationModal
