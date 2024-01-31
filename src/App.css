@@ -1,8 +1,11 @@
 #App {
     display: flex;
     justify-content: center;
-    background-color: #bfffe8;
+    background-color: var(--softest-green);
 
+    --dark-green: #416205;
+    --softer-green: #aef1ae;
+    --softest-green: #bfffe8;
     --gig-panels-height: 42rem;
     --gig-panels-width: 24rem;
     --standard-margin: 1rem;
@@ -18,26 +21,21 @@
     margin: var(--standard-margin);
 }
 
-#recently-completed {
-    display: flex;
-    justify-content: center;
-    padding: 0;
-}
 
 #buttons-and-gigs-container {
     display: flex;
     padding: 0 1rem 1rem 1rem;
     height: 38rem;
-}
 
-#scroll-buttons-container button {
-    display: block;
-    background-color: #aef1ae;
-    border: 0;
-    cursor: pointer;
-    height: 5.5rem;
-    margin: 1rem 0;
-    width: 2rem;
+    & button {
+        display: block;
+        background-color: var(--softer-green);
+        border: 0;
+        cursor: pointer;
+        height: 5.5rem;
+        margin: 1rem 0;
+        width: 2rem;
+    }
 }
 
 #scroll-buttons-container button:nth-child(1),
@@ -59,7 +57,7 @@
     display: flex;
     flex-direction: column;
 
-    background-color: #aef1ae;
+    background-color: var(--softer-green);
     border-radius: 0.5rem;
     height: calc(0.80 * var(--gig-panels-height));
     width: var(--gig-panels-width);

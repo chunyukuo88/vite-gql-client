@@ -1,14 +1,26 @@
-#create-new-gig form {
+
+#create-new-gig {
+    color: var(--dark-green);
+    & form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin: var(--standard-margin);
+    }
+}
+
+#recently-completed {
+    color: var(--dark-green);
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    margin: var(--standard-margin);
+    justify-content: center;
+    padding: 0;
 }
 
 .wk-radio-buttons-section {
     background: #aef1ae;
     margin: 1rem 0;
     text-align: center;
+
     & label {
         margin: 0 2rem;
         & input {
