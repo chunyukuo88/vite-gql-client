@@ -1,12 +1,16 @@
-import { GraphQLClient, gql } from 'graphql-request';
+import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 import { errorLogger } from './common/utils.ts';
 
 const url = 'http://localhost:9001/graphql';
-const client = new GraphQLClient(url);
 
 export const queryKeys = {
     GET_GIGS: 'Get gigs',
 };
+
+const apolloClient = new ApolloClient({
+    uri: url,
+    cache: new InMemoryCache(),
+});
 
 export async function createGig(input) {
     const mutation = gql`
@@ -16,8 +20,16 @@ export async function createGig(input) {
             }
         }
     `;
-    const { gig } = await client.request(mutation, { input });
-    return gig;
+    try {
+        const { data } = apolloClient.mutate({
+            mutation,
+            variables: { input },
+        });
+        return data.gig;
+    } catch (e) {
+        errorLogger('Failed to create gig:');
+        errorLogger(e);
+    }
 }
 
 export async function getGigs() {
@@ -39,8 +51,8 @@ export async function getGigs() {
         }
     `;
     try {
-        const { gigs } = await client.request(query);
-        return gigs;
+        const { data } = await apolloClient.query({ query });
+        return data.gigs;
     } catch (e) {
         errorLogger('Failed to grab gigs. Error: ', e);
     }
