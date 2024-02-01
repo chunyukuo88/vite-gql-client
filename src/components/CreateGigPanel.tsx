@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
+
 import { billingOptions, companies, PaymentMethods, rates } from '../common/constants.ts';
-import { createGig } from '../queries.ts';
+import { createGig, getCompanies, queryKeys } from '../queries.ts';
 import { generateUniqueInteger, logger } from '../common/utils.ts';
+import { updateCompanies } from '../globalState';
 import './CreateGigPanel.css';
 
 const ConfirmationModal = ({ showModal, onClose, handleSubmit }) => (
@@ -17,6 +21,23 @@ const ConfirmationModal = ({ showModal, onClose, handleSubmit }) => (
 );
 
 export function CreateGigPanel() {
+    const queryResult = useQuery({
+       queryKey: [queryKeys.GET_COMPANIES],
+       queryFn: getCompanies,
+    });
+    const dispatch = useDispatch();
+    if (queryResult.isLoading) {
+        console.info('loading');
+    }
+    if (queryResult.isError) {
+        console.info('oops');
+        console.dir(queryResult);
+    }
+    if (queryResult.isSuccess) {
+        console.info('Yay!', queryResult.data.sbCompanies);
+        dispatch(updateCompanies(queryResult.data.sbCompanies));
+    }
+
     const { CHECK, PAYPAL, WIRE_TRANSFER} = PaymentMethods;
     const { HOURLY, MOST_COMMON_INTERVAL, PER_CHAR } = rates;
     const { HOUR, WORD_COUNT } = billingOptions;

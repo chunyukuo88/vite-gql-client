@@ -6,7 +6,31 @@ const client = new GraphQLClient(url);
 
 export const queryKeys = {
     GET_GIGS: 'Get gigs',
+    GET_COMPANIES: 'Get companies',
 };
+
+export async function getCompanies() {
+    const query = gql`
+        query{
+            sbCompanies {
+                company_id
+                created_at
+                official_name
+                dba
+                their_clients
+                address
+                phone
+                contact_name
+            }
+        }
+    `;
+    try {
+        const { companies } = await client.request(query);
+        return companies;
+    } catch (e) {
+        errorLogger('Failed to grab companies. Error: ', e);
+    }
+}
 
 export async function createGig(input) {
     const mutation = gql`

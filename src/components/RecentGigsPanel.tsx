@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+
 import { getGigs, queryKeys } from '../queries.ts';
 import { getDisplayedGigs } from './utils.ts';
 
@@ -10,7 +11,6 @@ export function RecentGigsPanel() {
         queryKey: [queryKeys.GET_GIGS],
         queryFn: getGigs,
     });
-
 
     if (queryResult.isLoading) {
         return (
