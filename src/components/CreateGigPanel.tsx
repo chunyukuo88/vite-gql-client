@@ -34,8 +34,7 @@ export function CreateGigPanel() {
         console.dir(queryResult);
     }
     if (queryResult.isSuccess) {
-        console.info('Yay!', queryResult.data.sbCompanies);
-        dispatch(updateCompanies(queryResult.data.sbCompanies));
+        dispatch(updateCompanies(queryResult.data));
     }
 
     const { CHECK, PAYPAL, WIRE_TRANSFER} = PaymentMethods;

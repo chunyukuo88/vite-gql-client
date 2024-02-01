@@ -24,8 +24,8 @@ export async function getCompanies() {
         }
     `;
     try {
-        const { companies } = await client.request(query);
-        return companies;
+        const { data } = await apolloClient.query({ query });
+        return data.sbCompanies;
     } catch (e) {
         errorLogger('Failed to grab companies. Error: ', e);
     }
