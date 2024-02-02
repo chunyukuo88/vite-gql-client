@@ -20,6 +20,76 @@ const ConfirmationModal = ({ showModal, onClose, handleSubmit }) => (
     )
 );
 
+const HourlyBillingInputs = (props) => (
+    <div className='columns'>
+        <div className='column'>
+            <label className='label is-small'>Billable hours</label>
+            <input
+                className='input is-small'
+                type='number'
+                name='billable-hours'
+                onChange={props.billableHoursHandler}
+                value={props.hours}
+            />
+        </div>
+        <div className='column'>
+            <label className='label is-small'>Hourly Rate</label>
+            <input
+                className='input is-small'
+                type='number'
+                name='hourly-rate'
+                onChange={props.hourlyRateHandler}
+                value={props.hourlyRate}
+            />
+        </div>
+        <div className='column'>
+            <label className='label is-small'>Total</label>
+            <input
+                className='input is-small'
+                type='number'
+                name='total'
+                value={props.totalAmountCharged}
+                onChange={props.totalHandler}
+            />
+        </div>
+    </div>
+);
+
+const PerWordBillingInputs = (props) => (
+    <div className='columns'>
+        <div className='column'>
+            <label className='label is-small'>Total chars</label>
+            <input
+                className='input is-small'
+                type='number'
+                name='total-chars'
+                value={props.charCount}
+                onChange={props.totalCharsHandler}
+            />
+        </div>
+        <div className='column'>
+            <label className='label is-small'>Rate Per Char</label>
+            <input
+                className='input is-small'
+                type='number'
+                name='per-char-rate'
+                value={props.perCharRate}
+                onChange={props.perCharRateHandler}
+            />
+        </div>
+        <div className='column'>
+            <label className='label is-small'>Total</label>
+            <input
+                className='input is-small'
+                type='number'
+                name='total'
+                onChange={props.totalHandler}
+                value={props.totalAmountCharged}
+            />
+        </div>
+    </div>
+);
+
 export function CreateGigPanel() {
     const queryResult = useQuery({
        queryKey: [queryKeys.GET_COMPANIES],
@@ -58,11 +128,14 @@ export function CreateGigPanel() {
     const [invoiceSent, setInvoiceSent] = useState(today);
     const [datePaid, setDatePaid] = useState(null);
 
-    const formIsIncomplete = !totalAmountCharged || !fileNames;
-
     const getCreatedAtDate = () => {
         const date = new Date();
         return date.toISOString().split('T')[0];
+    };
+
+    const getCompanyId = () => {
+        const match = queryResult.data.find(comp => comp.official_name === company);
+        return match.company_id;
     };
 
     const handleSubmit = async (e) => {
@@ -71,6 +144,7 @@ export function CreateGigPanel() {
             invoice_number: generateUniqueInteger(),
             created_at: getCreatedAtDate(),
             company,
+            company_id: getCompanyId(),
             file_names: fileNames,
             payment_method: paymentMethod,
             hours,
@@ -152,76 +226,6 @@ export function CreateGigPanel() {
       </div>
     );
 
-    const HourlyBillingInputs = () => (
-        <div className='columns'>
-            <div className='column'>
-                <label className='label is-small'>Billable hours</label>
-                <input
-                    className='input is-small'
-                    type='number'
-                    name='billable-hours'
-                    onChange={billableHoursHandler}
-                    value={hours}
-                />
-            </div>
-            <div className='column'>
-                <label className='label is-small'>Hourly Rate</label>
-                <input
-                    className='input is-small'
-                    type='number'
-                    name='hourly-rate'
-                    onChange={hourlyRateHandler}
-                    value={hourlyRate}
-                />
-            </div>
-            <div className='column'>
-                <label className='label is-small'>Total</label>
-                <input
-                    className='input is-small'
-                    type='number'
-                    name='total'
-                    value={totalAmountCharged}
-                    onChange={totalHandler}
-                />
-            </div>
-        </div>
-    );
-
-    const PerWordBillingInputs = () => (
-        <div className='columns'>
-            <div className='column'>
-                <label className='label is-small'>Total chars</label>
-                <input
-                    className='input is-small'
-                    type='number'
-                    name='total-chars'
-                    value={charCount}
-                    onChange={totalCharsHandler}
-                />
-            </div>
-            <div className='column'>
-                <label className='label is-small'>Rate Per Char</label>
-                <input
-                    className='input is-small'
-                    type='number'
-                    name='per-char-rate'
-                    value={perCharRate}
-                    onChange={perCharRateHandler}
-                />
-            </div>
-            <div className='column'>
-                <label className='label is-small'>Total</label>
-                <input
-                    className='input is-small'
-                    type='number'
-                    name='total'
-                    onChange={totalHandler}
-                    value={totalAmountCharged}
-                />
-            </div>
-        </div>
-    );
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const closeModal = () => setIsModalOpen(false);
@@ -231,6 +235,26 @@ export function CreateGigPanel() {
         setIsModalOpen(true);
     }
 
+    const companiesInputClassName = (queryResult.isLoading) ? 'input is-small is-loading' : 'input is-small';
+
+    const CompanyOptions = () => {
+        if (queryResult.isLoading) {
+            return <option>Loading...</option>;
+        }
+        if (queryResult.isError) {
+            return <option>Companies unavailable.</option>;
+        }
+        return queryResult.data.map((company, key) => (
+            <option key={key}>{company.official_name}</option>
+        ));
+    };
+
+    const formIsIncomplete = !totalAmountCharged || !fileNames;
+
+    const SubmissionButton = () => formIsIncomplete
+      ? <button className='button ' type='submit' disabled>Some fields are missing</button>
+      : <button className='button' type='submit'>Record invoice for ${totalAmountCharged}</button>;
+
     return (
         <section id='create-new-gig' className='card'>
             <header id='recently-completed' className='card-header-title is-size-2'>
@@ -238,9 +262,8 @@ export function CreateGigPanel() {
             </header>
             <form onSubmit={openModal} className='control'>
                 <div className='select is-primary'>
-                    <select className='input is-small' onChange={companyHandler}>
-                        <option>ETS</option>
-                        <option>Chen Xi</option>
+                    <select className={companiesInputClassName} onChange={companyHandler}>
+                        <CompanyOptions />
                     </select>
                 </div>
 
@@ -273,8 +296,24 @@ export function CreateGigPanel() {
                     </div>
                 </div>
 
-                {billingOption === HOUR ? <HourlyBillingInputs /> : null}
-                {billingOption === WORD_COUNT ? <PerWordBillingInputs/> : null}
+                {billingOption === HOUR
+                    ? <HourlyBillingInputs
+                        hours={hours}
+                        hourlyRate={hourlyRate}
+                        hourlyRateHandler={hourlyRateHandler}
+                        billableHoursHandler={billableHoursHandler}
+                        totalAmountCharged={totalAmountCharged}
+                        totalHandler={totalHandler}
+                    />
+                    : <PerWordBillingInputs
+                        charCount={charCount}
+                        totalCharsHandler={totalCharsHandler}
+                        perCharRate={perCharRate}
+                        perCharRateHandler={perCharRateHandler}
+                        totalHandler={totalHandler}
+                        totalAmountCharged={totalAmountCharged}
+                    />
+                }
 
                 <label className='label is-small'>Payment method</label>
                 <div className='select is-primary'>
@@ -288,10 +327,7 @@ export function CreateGigPanel() {
                 <DateInputs />
                 <br/>
 
-                {formIsIncomplete
-                    ? <button className='button ' type='submit' disabled>Some fields are missing</button>
-                    : <button className='button' type='submit'>Record invoice for ${totalAmountCharged}</button>
-                }
+                <SubmissionButton />
             </form>
             <ConfirmationModal
                 showModal={isModalOpen}
