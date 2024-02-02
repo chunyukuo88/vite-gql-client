@@ -5,7 +5,31 @@ const url = 'http://localhost:9001/graphql';
 
 export const queryKeys = {
     GET_GIGS: 'Get gigs',
+    GET_COMPANIES: 'Get companies',
 };
+
+export async function getCompanies() {
+    const query = gql`
+        query{
+            sbCompanies {
+                company_id
+                created_at
+                official_name
+                dba
+                their_clients
+                address
+                phone
+                contact_name
+            }
+        }
+    `;
+    try {
+        const { data } = await apolloClient.query({ query });
+        return data.sbCompanies;
+    } catch (e) {
+        errorLogger('Failed to grab companies. Error: ', e);
+    }
+}
 
 const apolloClient = new ApolloClient({
     uri: url,

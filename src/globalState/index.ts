@@ -1,0 +1,1 @@
+export { selectCompanies, updateCompanies } from './companiesSlice.ts';

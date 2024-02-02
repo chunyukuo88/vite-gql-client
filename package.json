@@ -13,13 +13,17 @@
     "test": "vitest --config vitest.config.js"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.1.0",
     "@apollo/client": "^3.9.1",
     "@tanstack/react-query": "^5.17.19",
     "bulma": "^0.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^9.1.0",
     "react-router": "^6.21.3",
-    "react-router-dom": "^6.21.3"
+    "react-router-dom": "^6.21.3",
+    "redux": "^5.0.1",
+    "redux-promise": "^0.6.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.3.0",
