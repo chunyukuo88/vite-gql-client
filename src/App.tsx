@@ -1,7 +1,6 @@
 import { RecentGigsPanel } from './components/RecentGigsPanel.tsx';
 import { CreateGigPanel } from './components/CreateGigPanel.tsx';
 import './App.css';
-
 function App() {
     return (
         <main id='App'>
@@ -11,4 +10,4 @@ function App() {
     );
 }
 
-export default App
+export default App;
