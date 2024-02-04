@@ -9,3 +9,7 @@
 - PNPM
 - Vite
 - TypeScript
+
+### Good references:
+
+- A [refresher](https://www.sammeechward.com/cognito-user-pool-react) on integrating Cognito into your React app by Sam Meacham-Ward.

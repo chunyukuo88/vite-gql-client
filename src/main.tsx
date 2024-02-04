@@ -1,18 +1,18 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import { Provider } from 'react-redux';
-import { store } from './globalState/store.ts';
-import { QueryClientProvider, QueryClient} from '@tanstack/react-query';
+import { RouterProvider } from 'react-router';
+import { createBrowserRouter } from 'react-router-dom';
 
-const queryClient = new QueryClient();
+import Root from './Root.tsx';
+import Gigs from './pages/Gigs.tsx';
+import SignIn from './SignIn.tsx';
+
+const router = createBrowserRouter([
+    {path: '/', element: <Gigs />},
+    {path: '/sign-in', element: <SignIn />},
+]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-          <Provider store={store}>
-              <App />
-          </Provider>
-      </QueryClientProvider>
-  </React.StrictMode>,
+    <Root>
+        <RouterProvider router={router} />
+    </Root>
 );
