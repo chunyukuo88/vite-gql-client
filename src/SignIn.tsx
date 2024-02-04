@@ -13,9 +13,9 @@ export default function SignIn() {
 
         try {
             await signIn(email, password);
-            setSuccess(true)
+            setSuccess(true);
         } catch (err) {
-            setError(err.message)
+            setError(`Z Error: ${err.message}.`);
         }
     }
 
