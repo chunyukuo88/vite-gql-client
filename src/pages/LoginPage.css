@@ -1,0 +1,64 @@
+#login-card-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#login-card {
+    border: var(--border);
+    margin-top: 20%;
+    height: 15rem;
+    width: 50vw;
+}
+
+.inputs-wrapper {
+    width: 74%;
+    margin: auto;
+    border: var(--border);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    text-align: center;
+    margin: 1rem;
+    background-color: black;
+    color: var(--primaryColor);
+    width: 75%;
+}
+
+input:focus {
+    border: var(--border);
+    outline: none;
+}
+
+.login-button {
+    background-color: black;
+    color: var(--primaryColor);
+    cursor: pointer;
+    border-top: var(--border);
+    border-bottom: var(--border);
+    margin: 1rem auto;
+    height: 2rem;
+    width: 50vw;
+}
+
+.login-button:hover {
+    background-color: var(--primaryColor);
+    color: black;
+}
+
+.logged-out-section-heading {
+    font-size: 1rem;
+    text-align: center;
+}
+
+
+@media (max-width: 400px) {
+    .inputs-wrapper {
+        border: none;
+    }
+}

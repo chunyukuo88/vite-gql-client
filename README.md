@@ -13,3 +13,4 @@
 ### Good references:
 
 - A [refresher](https://www.sammeechward.com/cognito-user-pool-react) on integrating Cognito into your React app by Sam Meacham-Ward.
+- [Amplify API docs](https://docs.amplify.aws/javascript/build-a-backend/auth/enable-sign-up/)
