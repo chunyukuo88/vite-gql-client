@@ -12,7 +12,7 @@ export default function SignIn() {
         setError("")
 
         try {
-            await signUp(username, email, password)
+            await signIn(email, password);
             setSuccess(true)
         } catch (err) {
             setError(err.message)
