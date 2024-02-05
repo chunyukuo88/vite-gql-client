@@ -1,6 +1,7 @@
 fieldset {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 form button {

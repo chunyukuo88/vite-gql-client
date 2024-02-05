@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setCredentials } from '../globalState';
 import { useAuth } from '../globalState/auth/useAuth.ts';
 import { Link } from 'react-router-dom';
+import { routes } from '../common/routes.ts';
 import './SignInPage.css';
 
 export default function SignInPage () {
@@ -49,10 +50,11 @@ export default function SignInPage () {
     return (
         <>
             <form className='control' onSubmit={handleSubmit}>
-                <fieldset className=''>
+                <fieldset>
                     <input
-                        type='text'
+                        className='input'
                         id='username'
+                        type='text'
                         ref={userRef}
                         value={userName}
                         onChange={handleUserInput}
@@ -61,15 +63,16 @@ export default function SignInPage () {
                         required
                     />
                     <input
-                        type='password'
+                        className='input'
                         id='password'
+                        type='password'
                         onChange={handlePwdInput}
                         placeholder={'Your password'}
                         value={pwd}
                         required
                     />
+                    <button className='button' title='login button'>Submit</button>
                 </fieldset>
-                <button className='' title='login button'>Submit</button>
                 <p>{errMsg}</p>
             </form>
             <Link to={routes.MAIN_PAGE}>Back to main</Link>
