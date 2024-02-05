@@ -48,7 +48,10 @@ export default function SignInPage () {
     const handlePwdInput = (event) => setPwd(event.target.value);
 
     return (
-        <>
+        <div className='card' id='sign-in-card'>
+            <header className='card-header-title is-size-2'>
+                Sign In
+            </header>
             <form className='control' onSubmit={handleSubmit}>
                 <fieldset>
                     <input
@@ -74,8 +77,14 @@ export default function SignInPage () {
                     <button className='button' title='login button'>Submit</button>
                 </fieldset>
                 <p>{errMsg}</p>
+                <div id='other-password-operations'>
+                    <Link to={routes.FORGOT_PW}>Forgot Password?</Link>
+                    <Link to={routes.CHANGE_PW}>Change Password</Link>
+                </div>
             </form>
-            <Link to={routes.MAIN_PAGE}>Back to main</Link>
-        </>
+            <div style={{ margin: '1rem' }}>
+                <Link to={routes.MAIN_PAGE}>Back to main</Link>
+            </div>
+        </div>
     );
 }
