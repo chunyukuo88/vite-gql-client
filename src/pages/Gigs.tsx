@@ -1,12 +1,15 @@
 import { CreateGigPanel } from '../components/CreateGigPanel.tsx';
 import { RecentGigsPanel } from '../components/RecentGigsPanel.tsx';
+import { Link } from 'react-router-dom';
+import { routes } from '../common/routes.ts';
 import './Gigs.css';
 
 export default function Gigs() {
     return (
-        <main id='App'>
+        <>
+            <Link to={routes.MAIN_PAGE}>Sign In</Link>
             <CreateGigPanel />
             <RecentGigsPanel />
-        </main>
+        </>
     );
 }

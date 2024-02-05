@@ -1,0 +1,8 @@
+fieldset {
+    display: flex;
+    flex-direction: column;
+}
+
+form button {
+    width: 100%;
+}

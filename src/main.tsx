@@ -1,11 +1,13 @@
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router';
 import { createBrowserRouter } from 'react-router-dom';
-import {Amplify} from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
 
 import Root from './Root.tsx';
 import Gigs from './pages/Gigs.tsx';
-import LogIn from './pages/LogIn.tsx';
+import SignInPage from './pages/SignInPage.tsx';
+
+import { routes } from './common/routes.ts';
 
 Amplify.configure({
     Auth: {
@@ -18,12 +20,14 @@ Amplify.configure({
 });
 
 const router = createBrowserRouter([
-    {path: '/', element: <Gigs />},
-    {path: '/sign-in', element: <LogIn />},
+    {path: routes.MAIN_PAGE, element: <Gigs />},
+    {path: routes.SIGN_IN_PAGE, element: <SignInPage />},
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <Root>
-        <RouterProvider router={router} />
+        <main id='App'>
+            <RouterProvider router={router}/>
+        </main>
     </Root>
 );
