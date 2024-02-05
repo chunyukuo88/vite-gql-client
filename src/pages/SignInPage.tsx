@@ -79,7 +79,7 @@ export default function SignInPage () {
                 <p>{errMsg}</p>
                 <div id='other-password-operations'>
                     <Link to={routes.FORGOT_PW}>Forgot Password?</Link>
-                    <Link to={routes.CHANGE_PW}>Change Password</Link>
+                    <Link to={routes.RESET_PW}>Reset Password</Link>
                 </div>
             </form>
             <div style={{ margin: '1rem' }}>

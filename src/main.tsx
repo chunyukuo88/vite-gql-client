@@ -8,7 +8,7 @@ import Gigs from './pages/Gigs.tsx';
 import SignInPage from './pages/SignInPage.tsx';
 
 import { routes } from './common/routes.ts';
-import ChangePasswordPage from './pages/ChangePassword.tsx';
+import ResetPasswordPage from './pages/ResetPassword.tsx';
 
 Amplify.configure({
     Auth: {
@@ -23,7 +23,7 @@ Amplify.configure({
 const router = createBrowserRouter([
     {path: routes.MAIN_PAGE, element: <Gigs />},
     {path: routes.SIGN_IN_PAGE, element: <SignInPage />},
-    {path: routes.CHANGE_PW, element: <ChangePasswordPage />},
+    {path: routes.RESET_PW, element: <ResetPasswordPage />},
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

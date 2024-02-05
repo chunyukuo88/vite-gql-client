@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { routes } from '../common/routes.ts';
 
-export default function ChangePasswordPage() {
+export default function ResetPasswordPage() {
     const [currentPwd, setCurrentPwd] = useState('');
     const [newPwd, setNewPwdInput] = useState('');
     const [confirmNewPwd, setConfirmNewPwd] = useState('');
