@@ -20,7 +20,7 @@ export default function ResetPasswordPage() {
     return (
         <div className='card' id='change-password-card'>
             <header className='card-header-title is-size-2'>
-                Change Password
+                Reset Password
             </header>
             <form className='control' onSubmit={handleSubmit}>
                 <fieldset>
@@ -55,9 +55,6 @@ export default function ResetPasswordPage() {
                 </fieldset>
                 <p>{errMsg}</p>
             </form>
-            <div style={{ margin: '1rem' }}>
-                <Link to={routes.MAIN_PAGE}>Back to main</Link>
-            </div>
         </div>
     );
 }

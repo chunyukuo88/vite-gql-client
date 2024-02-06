@@ -7,7 +7,7 @@ import './Gigs.css';
 export default function Gigs() {
     return (
         <>
-            <Link to={routes.MAIN_PAGE}>Sign In</Link>
+            <Link to={routes.SIGN_IN_PAGE}>Sign In</Link>
             <CreateGigPanel />
             <RecentGigsPanel />
         </>
