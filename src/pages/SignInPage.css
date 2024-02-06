@@ -1,0 +1,20 @@
+#sign-in-card {
+    height: 25rem;
+    width: 25rem;
+
+    & header {
+        text-align: center;
+        margin: auto 1rem;
+    }
+}
+
+#other-password-operations div {
+    display: inline;
+    margin: 0.5rem 2rem;
+    cursor: pointer;
+    color: var(--dark-green);
+}
+
+form button {
+    width: 100%;
+}

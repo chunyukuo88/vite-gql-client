@@ -178,7 +178,7 @@ export function CreateGigPanel() {
     const datePaidHandler = (e) => setDatePaid(e.target.value);
 
     const DateInputs = () => (
-      <div className='rows'>
+      <>
           <div className='columns'>
               <div className='column'>
                   <label className='label is-small'>Start Date</label>
@@ -223,7 +223,7 @@ export function CreateGigPanel() {
                   />
               </div>
           </div>
-      </div>
+      </>
     );
 
     const [isModalOpen, setIsModalOpen] = useState(false);
